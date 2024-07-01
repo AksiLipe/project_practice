@@ -10,7 +10,7 @@ DuoCypher — это интерактивное веб-приложение, п�
 ### Состав команды:
 1) Ахмед Аль-Асри (teamlead, frontend, backend) - a7medsaif2005@gmail.com
 2) Филиппов Вадим (techlead, frontend, backend) - fill.123filippov@mail.ru
-3) Дробышева Майя (frontend, backend) - mayushka0105@yandex.ru
+3) Дробышева Майя (frontend, backend, QA) - mayushka0105@yandex.ru
 
 ---
 
