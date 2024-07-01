@@ -9,7 +9,7 @@
 
 ### Состав команды
 1) Ахмед Аль-Асри (teamlead, frontend, backend)
-2) Филиппов Вадим (techlead, fronend, backend)
+2) Филиппов Вадим (techlead, frontend, backend)
 3) Дробышева Майя (frontend, backend)
 
 ### Требования (Use Case) для DuoCypher
