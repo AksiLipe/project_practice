@@ -1,5 +1,5 @@
-from django.db import models
 from django.core.validators import MinLengthValidator, RegexValidator
+from django.db import models
 
 
 class User(models.Model):
@@ -17,14 +17,3 @@ class User(models.Model):
         ],
         help_text='Пароль должен быть не менее 8 символов и содержать как минимум одну заглавную букву, одну строчную букву и одну цифру'
     )
-
-
-class Rating(models.Model):
-    user = models.OneToOneField('User', on_delete=models.DO_NOTHING)
-    rating = models.IntegerField(default=0)
-
-
-class Symbols(models.Model):
-    symbol = models.CharField(max_length=1, blank=True)
-    answer = models.CharField(max_length=100, blank=True)
-    is_read = models.BooleanField(default=False)
