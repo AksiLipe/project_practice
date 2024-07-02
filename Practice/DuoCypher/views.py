@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Symbols
+from .models.Symbols import Symbols
 
 
 def index(request):
