@@ -11,3 +11,10 @@ def rating(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+def sending(request):
+    return render(request, 'sending.html')
+
+def receiving(request):
+    return render(request, 'receiving.html')
