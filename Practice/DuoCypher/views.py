@@ -27,3 +27,4 @@ def sending(request):
 
 def receiving(request):
     return render(request, 'receiving.html')
+
