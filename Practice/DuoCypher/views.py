@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Symbols
 
 
 def index(request):
@@ -14,7 +15,15 @@ def about(request):
 
 
 def sending(request):
-    return render(request, 'sending.html')
+    symbols_count = Symbols.objects.count()
+    levels_count = symbols_count // 2
+    levels = list(range(1, levels_count + 1))
+
+    context = {
+        'levels': levels
+    }
+    return render(request, 'sending.html', context)
+
 
 def receiving(request):
     return render(request, 'receiving.html')
