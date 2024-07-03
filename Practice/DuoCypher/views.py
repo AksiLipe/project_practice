@@ -10,8 +10,8 @@ def rating(request):
     return render(request, 'rating.html')
 
 
-def about(request):
-    return render(request, 'about.html')
+def profile(request):
+    return render(request, 'profile.html')
 
 
 def sending(request):
@@ -27,3 +27,4 @@ def sending(request):
 
 def receiving(request):
     return render(request, 'receiving.html')
+
