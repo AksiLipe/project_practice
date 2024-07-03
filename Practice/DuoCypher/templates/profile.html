@@ -10,9 +10,19 @@
 <body class="bg-body-secondary">
 <div class="container text-light">
     {% include "navbar.html" %}
-    <div class="container col-md-10 d-flex flex-row gap-3 justify-content-between justify-content-center">
-        <div class="card shadow-lg rounded-end rounded-5 border-light bg-body-secondary" style="width: 28rem;">
+    <div class="container col-md-11 d-flex flex-row gap-3 justify-content-between justify-content-center">
+        <button class="btn btn-outline-secondary d-flex align-items-center" onclick="location.href='/'"
+                style="width: 50px; height: 50px;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left-square" width="24"
+                 height="24"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 1 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+            </svg>
+        </button>
 
+
+        <div class="card shadow-lg rounded-end rounded-5 border-light bg-body-secondary" style="width: 28rem;">
             <div class="card-body text-center">
                 <img src="https://koshka.top/uploads/posts/2021-12/1639387906_2-koshka-top-p-izobrazhenie-kotenka-2.jpg"
                      class="rounded-circle mx-auto" style="width: 12rem; height: 12rem;" alt="...">
@@ -52,10 +62,12 @@
                 </div>
             </div>
         </div>
-        <div class="card shadow-sm rounded-start rounded-5 border-light shadow-lg bg-body-secondary" style="width: 45rem;">
+
+        <div class="card shadow-sm rounded-start rounded-5 border-light shadow-lg bg-body-secondary"
+             style="width: 45rem;">
             <div class="card-body text-center">
                 <h5 class="card-title">Morse code</h5>
-                <div class="row" style="margin-top: 20px;">
+                <div class="row " style="margin-top: 20px;">
                     <div class="col-6">
                         <table class="table table-hover table-striped table-light">
                             <thead>
