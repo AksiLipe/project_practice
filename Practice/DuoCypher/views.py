@@ -25,6 +25,13 @@ def sending(request):
     return render(request, 'sending.html', context)
 
 
+def sending_level(request, level):
+    context = {
+        'level': level
+    }
+    return render(request, 'sending_level.html', context)
+
+
 def receiving(request):
     symbols_count = Symbols.objects.count()
     levels_count = symbols_count // 2
@@ -34,4 +41,11 @@ def receiving(request):
         'levels': levels
     }
     return render(request, 'receiving.html', context)
+
+
+def receiving_level(request, level):
+    context = {
+        'level': level
+    }
+    return render(request, 'receiving_level.html', context)
 

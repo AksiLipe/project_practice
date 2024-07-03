@@ -19,7 +19,7 @@
             <div class="row">
                 {% for level in levels %}
                     <div class="col-12 col-md-4 mb-3">
-                        <button class="btn btn-primary btn-block w-100">Level {{ level }}</button>
+                        <button class="btn btn-primary btn-block w-100" onclick="location.href='/receiving/{{ level }}'">Level {{ level }}</button>
                     </div>
                     {% if forloop.counter|divisibleby:3 and not forloop.last %}
                         </div><div class="row">
