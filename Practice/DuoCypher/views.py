@@ -14,6 +14,10 @@ def profile(request):
     return render(request, 'profile.html')
 
 
+def translator(request):
+    return render(request, 'translator.html')
+
+
 def sending(request):
     symbols_count = Symbols.objects.count()
     levels_count = symbols_count // 2

@@ -9,4 +9,5 @@ urlpatterns = [
     path('sending', views.sending, name='sending'),
     path('receiving/<int:level>/', views.receiving_level, name='receiving_level'),
     path('sending/<int:level>/', views.sending_level, name='sending_level'),
+    path('translator', views.translator, name='translator'),
 ]
