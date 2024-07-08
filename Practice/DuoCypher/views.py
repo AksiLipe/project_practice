@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect
 from .forms import AnswerForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from .models.Symbols import Symbols
 from utils.helpers import generate_levels
+from django.contrib.auth import authenticate, login, update_session_auth_hash, logout
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
 
-def index(request):
-    return render(request, 'index.html')
+def base(request):
+    return render(request, 'base.html')
 
 
 def rating(request):
@@ -14,6 +19,10 @@ def rating(request):
 
 def profile(request):
     return render(request, 'profile.html')
+
+
+def translator(request):
+    return render(request, 'translator.html')
 
 
 def sending(request):
@@ -82,3 +91,32 @@ def get_correct_answer(level):
     symbols_for_level = generate_levels(level)
     correct_answer = symbols_for_level[0].symbol
     return correct_answer
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(base)
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect(base)  # Перенаправьте на домашнюю страницу
+        else:
+            messages.error(request, "Ошибка авторизации. Проверьте введенные данные.")
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login_view.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect(base)

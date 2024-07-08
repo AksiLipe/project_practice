@@ -10,7 +10,8 @@
 <body class="bg-body-secondary text-light d-flex flex-column vh-100">
 <div class="container text-light mb-4">
     {% include "navbar.html" %}
-    <div class="container col-md-11 d-flex flex-row gap-3 justify-content-between justify-content-center">
+    {% if user.is_authenticated %}
+        <div class="container col-md-11 d-flex flex-row gap-3 justify-content-between justify-content-center">
         <button class="btn btn-outline-secondary d-flex align-items-center" onclick="location.href='/'"
                 style="width: 50px; height: 50px;">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left-square" width="24"
@@ -20,7 +21,6 @@
                       d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 1 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
             </svg>
         </button>
-
 
         <div class="card shadow-lg rounded-end rounded-5 border-light bg-body-secondary" style="width: 28rem;">
             <div class="card-body text-center">
@@ -37,9 +37,8 @@
             </div>
 
             <div class="card-body text-center">
-                <h5 class="card-title">User Profile</h5>
-                <p class="card-text">first_name last_name</p>
-                <ul class="list-group list-group-flush">
+                <h5 class="card-title">{{ user.username }}</h5>
+                <ul class="list-group list-group-flush mt-4">
                     <div class="input-group mb-3">
                         <input type="file" class="form-control" id="inputGroupFile04"
                                aria-describedby="inputGroupFileAddon04" aria-label="Download">
@@ -47,13 +46,13 @@
                         </button>
                     </div>
                     <div class="input-group flex-nowrap mb-3">
-                        <span class="input-group-text" id="addon-wrapping">@</span>
-                        <input type="text" class="form-control" placeholder="Input UserName"
-                               aria-label="Имя пользователя" aria-describedby="addon-wrapping">
+                        <span class="input-group-text" id="addon-wrapping">Nickname</span>
+                        <input type="text" class="form-control" placeholder="Input new Nickname"
+                               aria-label="{{ user.username }}" aria-describedby="addon-wrapping">
                     </div>
                     <div class="input-group flex-nowrap mb-3">
-                        <span class="input-group-text" id="addon-wrapping">Email</span>
-                        <input type="text" class="form-control" placeholder="Input Email"
+                        <span class="input-group-text" id="addon-wrapping">Password</span>
+                        <input type="text" class="form-control" placeholder="Input new password"
                                aria-label="Имя пользователя" aria-describedby="addon-wrapping">
                     </div>
                 </ul>
@@ -62,143 +61,13 @@
                 </div>
             </div>
         </div>
-
-        <div class="card shadow-sm rounded-start rounded-5 border-light shadow-lg bg-body-secondary"
-             style="width: 45rem;">
-            <div class="card-body text-center">
-                <h5 class="card-title">Morse code</h5>
-                <div class="row " style="margin-top: 20px;">
-                    <div class="col-6">
-                        <table class="table table-hover table-striped table-light">
-                            <thead>
-                            <tr>
-                                <th scope="col">Symbol</th>
-                                <th scope="col">Code</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><b>A</b></td>
-                                <td>.-</td>
-                            </tr>
-                            <tr>
-                                <td><b>B</b></td>
-                                <td>-...</td>
-                            </tr>
-                            <tr>
-                                <td><b>C</b></td>
-                                <td>-.-.</td>
-                            </tr>
-                            <tr>
-                                <td><b>D</b></td>
-                                <td>-..</td>
-                            </tr>
-                            <tr>
-                                <td><b>E</b></td>
-                                <td>.</td>
-                            </tr>
-                            <tr>
-                                <td><b>F</b></td>
-                                <td>..-.</td>
-                            </tr>
-                            <tr>
-                                <td><b>G</b></td>
-                                <td>--.</td>
-                            </tr>
-                            <tr>
-                                <td><b>H</b></td>
-                                <td>....</td>
-                            </tr>
-                            <tr>
-                                <td><b>I</b></td>
-                                <td>..</td>
-                            </tr>
-                            <tr>
-                                <td><b>J</b></td>
-                                <td>.---</td>
-                            </tr>
-                            <tr>
-                                <td><b>K</b></td>
-                                <td>-.-</td>
-                            </tr>
-                            <tr>
-                                <td><b>L</b></td>
-                                <td>.-..</td>
-                            </tr>
-                            <tr>
-                                <td><b>M</b></td>
-                                <td>--</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-6">
-                        <table class="table table-hover table-striped table-light">
-                            <thead>
-                            <tr>
-                                <th scope="col">Symbol</th>
-                                <th scope="col">Code</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><b>N</b></td>
-                                <td>-.</td>
-                            </tr>
-                            <tr>
-                                <td><b>O</b></td>
-                                <td>---</td>
-                            </tr>
-                            <tr>
-                                <td><b>P</b></td>
-                                <td>.--.</td>
-                            </tr>
-                            <tr>
-                                <td><b>Q</b></td>
-                                <td>--.-</td>
-                            </tr>
-                            <tr>
-                                <td><b>R</b></td>
-                                <td>.-.</td>
-                            </tr>
-                            <tr>
-                                <td><b>S</b></td>
-                                <td>...</td>
-                            </tr>
-                            <tr>
-                                <td><b>T</b></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td><b>U</b></td>
-                                <td>..-</td>
-                            </tr>
-                            <tr>
-                                <td><b>V</b></td>
-                                <td>...-</td>
-                            </tr>
-                            <tr>
-                                <td><b>W</b></td>
-                                <td>.--</td>
-                            </tr>
-                            <tr>
-                                <td><b>X</b></td>
-                                <td>-..-</td>
-                            </tr>
-                            <tr>
-                                <td><b>Y</b></td>
-                                <td>-.--</td>
-                            </tr>
-                            <tr>
-                                <td><b>Z</b></td>
-                                <td>--..</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+    {% endif %}
+    <div class="card shadow-sm rounded-start rounded-5 border-light shadow-lg bg-body-secondary"
+         style="width: 45rem;">
+        <div class="card-body text-center">
+            {% include 'morse_code.html' %}
         </div>
+    </div>
     </div>
 </div>
 
