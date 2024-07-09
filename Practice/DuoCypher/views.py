@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models.Symbols import Symbols
 from utils.helpers import generate_levels
+from utils.helpers import levels_count
 from django.contrib.auth import authenticate, login, update_session_auth_hash, logout
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -26,9 +27,7 @@ def translator(request):
 
 
 def sending(request):
-    symbols_count = Symbols.objects.exclude(answer='  ').count()
-    levels_count = symbols_count // 2
-    levels = list(range(1, levels_count + 1))
+    levels = list(range(1, levels_count() + 1))
 
     context = {
         'levels': levels
@@ -45,9 +44,7 @@ def sending_level(request, level):
 
 
 def receiving(request):
-    symbols_count = Symbols.objects.exclude(answer='  ').count()
-    levels_count = symbols_count // 2
-    levels = list(range(1, levels_count + 1))
+    levels = list(range(1, levels_count() + 1))
 
     context = {
         'levels': levels
@@ -60,6 +57,7 @@ def receiving_level(request, level):
     form = AnswerForm()
     message = ""
     message_type = ""
+    show_next_level = False
 
     current_symbol_index = request.session.get(f'current_symbol_index_level_{level}', 0)
 
@@ -74,6 +72,8 @@ def receiving_level(request, level):
                     message = "Congratulations! You completed the level."
                     message_type = "success"
                     current_symbol_index = 0
+                    if level < levels_count():
+                        show_next_level = True
                 else:
                     message = 'Correct!'
                     message_type = 'success'
@@ -94,7 +94,8 @@ def receiving_level(request, level):
         'current_symbol': current_symbol,
         'form': form,
         'message': message,
-        'message_type': message_type
+        'message_type': message_type,
+        'show_next_level': show_next_level
     }
 
     return render(request, 'receiving_level.html', context)

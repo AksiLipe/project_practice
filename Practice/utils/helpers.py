@@ -14,3 +14,8 @@ def generate_levels(level):
     result = curr_level + repeat
 
     return result
+
+
+def levels_count():
+    symbols_count = Symbols.objects.exclude(answer='  ').count()
+    return symbols_count // 2
