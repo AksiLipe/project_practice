@@ -47,6 +47,8 @@
     {% if show_next_level %}
         <a href="{% url 'receiving_level' level=level|add:1 %}" class="btn btn-success">Next Level</a>
     {% endif %}
+
+    <a href="{% url 'reset_level' level=level %}" class="btn btn-warning">Reset Level</a>
 </div>
 {% include "footer.html" %}
 
