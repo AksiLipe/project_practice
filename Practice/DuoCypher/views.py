@@ -101,6 +101,12 @@ def receiving_level(request, level):
     return render(request, 'receiving_level.html', context)
 
 
+def reset_level(request, level):
+    request.session[f'current_symbol_index_level_{level}'] = 0
+
+    return redirect('receiving_level', level=level)
+
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
