@@ -61,14 +61,22 @@ def receiving_level(request, level):
     message = ""
     message_type = ""
 
+    current_symbol_index = request.session.get(f'current_symbol_index_level_{level}', 0)
+
     if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
             user_answer = form.cleaned_data['user_answer'].strip()
-            correct_answer = get_correct_answer(level).strip()
+            correct_answer = symbols[current_symbol_index].symbol.strip()
             if user_answer.lower() == correct_answer.lower():
-                message = 'Correct!'
-                message_type = 'success'
+                current_symbol_index += 1
+                if current_symbol_index == len(symbols):
+                    message = "Congratulations! You completed the level."
+                    message_type = "success"
+                    current_symbol_index = 0
+                else:
+                    message = 'Correct!'
+                    message_type = 'success'
             else:
                 message = 'Incorrect. Try again.'
                 message_type = 'danger'
@@ -76,9 +84,14 @@ def receiving_level(request, level):
             message = 'Please enter a valid answer.'
             message_type = 'danger'
 
+        request.session[f'current_symbol_index_level_{level}'] = current_symbol_index
+
+    current_symbol = symbols[current_symbol_index]
+
     context = {
         'level': level,
         'symbols': symbols,
+        'current_symbol': current_symbol,
         'form': form,
         'message': message,
         'message_type': message_type
@@ -86,11 +99,6 @@ def receiving_level(request, level):
 
     return render(request, 'receiving_level.html', context)
 
-
-def get_correct_answer(level):
-    symbols_for_level = generate_levels(level)
-    correct_answer = symbols_for_level[0].symbol
-    return correct_answer
 
 def register(request):
     if request.method == 'POST':

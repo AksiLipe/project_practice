@@ -23,32 +23,26 @@
         </svg>
     </button><h1>Receiving Level {{ level }}</h1>
 
-    <p>Morse Code: {{ symbols.0.answer }}</p>
+    <p>
+        Morse Code: {{ current_symbol.answer }}
+    </p>
 
     <form method="post">
         {% csrf_token %}
-    <div class="mb-3">
-        <label for="user_answer" class="form-label">Enter the Symbol:</label>
+        <div class="mb-3">
+            <label for="user_answer" class="form-label">Enter the Symbol:</label>
             <input type="text" class="form-control" id="user_answer" name="user_answer" required>
-    </div><button type="submit" class="btn btn-primary">Submit Answer</button>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Answer</button>
     </form>
 
     <p>Submitted answer: {{ form.user_answer.value }}</p>
 
     {% if message %}
         <div class="alert alert-{{ message_type }}">
-            {% if message_type == 'success' %}
-                Congratulations! Your answer is correct.
-            {% elif message == 'Please enter a valid answer.' %}
-                Please enter a valid answer.
-            {% elif message_type == 'danger' %}
-                Incorrect. Try again.
-            {% else %}
-                {{ message }}
-            {% endif %}
+            {{ message }}
         </div>
     {% endif %}
-
 </div>
 {% include "footer.html" %}
 
