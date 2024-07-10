@@ -11,8 +11,15 @@ class SendingAnswerForm(forms.Form):
 
     def clean_user_answer(self):
         data = self.cleaned_data['user_answer']
-        if data not in [".", "-"]:
+
+        if len(data) > 10:
+            raise ValidationError(
+                'Maximum length of 10 symbols exceeded.'
+            )
+
+        if not all(char in [".", "-"] for char in data):
             raise ValidationError(
                 'Invalid symbol. Please enter only "." or "-".'
             )
+
         return data

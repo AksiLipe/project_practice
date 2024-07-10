@@ -38,34 +38,47 @@ def sending_level(request, level):
     message_type = ""
     show_next_level = False
     completed_level = False
-
+    introduction_completed = request.session.get(f'introduction_completed_level_{level}', False)
     current_symbol_index = request.session.get(f'current_symbol_index_level_{level}', 0)
 
     if request.method == "POST":
-        form = SendingAnswerForm(request.POST)
-        if form.is_valid():
-            user_answer = form.cleaned_data['user_answer'].strip()
-            correct_answer = symbols[current_symbol_index].answer.strip()
-            if user_answer == correct_answer:
-                current_symbol_index += 1
-                if current_symbol_index == len(symbols):
-                    message = "Congratulations! You completed the level."
-                    message_type = "success"
-                    current_symbol_index = 0
-                    completed_level = True
-                    if level < levels_count():
-                        show_next_level = True
-                else:
-                    message = "Correct!"
-                    message_type = "success"
-            else:
-                message = "Wrong answer!"
-                message_type = "danger"
-        else:
-            message = "Please enter only '.' or '-'. Input length less than 10."
-            message_type = "danger"
+        if 'reset_level' in request.POST:
+            current_symbol_index = 0
+            introduction_completed = False
+            request.session[f'introduction_completed_level_{level}'] = introduction_completed
+            request.session[f'current_symbol_index_level_{level}'] = current_symbol_index
+            return redirect('sending_level', level=level)
 
-        request.session[f'current_symbol_index_level_{level}'] = current_symbol_index
+        if 'start_test' in request.POST:
+            request.session[f'introduction_completed_level_{level}'] = True
+            introduction_completed = True
+        else:
+            form = SendingAnswerForm(request.POST)
+            if form.is_valid():
+                user_answer = form.cleaned_data['user_answer'].strip()
+                correct_answer = symbols[current_symbol_index].answer.strip()
+                if user_answer == correct_answer:
+                    current_symbol_index += 1
+                    if current_symbol_index == len(symbols):
+                        message = "Congratulations! You completed the level."
+                        message_type = "success"
+                        current_symbol_index = 0
+                        completed_level = True
+                        if level < levels_count():
+                            show_next_level = True
+                    else:
+                        message = "Correct!"
+                        message_type = "success"
+                else:
+                    message = "Wrong answer!"
+                    message_type = "danger"
+            else:
+                message = "Only '.' and '-'."
+                message_type = 'danger'
+
+            request.session[f'current_symbol_index_level_{level}'] = current_symbol_index
+
+    introduction_symbols = symbols[:2]
 
     current_symbol = symbols[current_symbol_index]
 
@@ -73,11 +86,13 @@ def sending_level(request, level):
         'level': level,
         'symbols': symbols,
         'current_symbol': current_symbol,
+        'introduction_symbols': introduction_symbols,
         'form': form,
         'message': message,
         'message_type': message_type,
         'show_next_level': show_next_level,
-        'completed_level': completed_level
+        'completed_level': completed_level,
+        'introduction_completed': introduction_completed
     }
 
     return render(request, 'sending_level.html', context)
@@ -106,9 +121,22 @@ def receiving_level(request, level):
     show_next_level = False
     completed_level = False
 
-    current_symbol_index = request.session.get(f'current_symbol_index_level_{level}', 0)
+    introduction_completed = request.session.get(f'receiving_introduction_completed_level_{level}', False)
+    current_symbol_index = request.session.get(f'current_symbol_index_receiving_level_{level}', 0)
 
     if request.method == 'POST':
+        if 'reset_level' in request.POST:
+            current_symbol_index = 0
+            introduction_completed = False
+            request.session[f'receiving_introduction_completed_level_{level}'] = introduction_completed
+            request.session[f'current_symbol_index_receiving_level_{level}'] = current_symbol_index
+            return redirect('receiving_level', level=level)
+
+        elif 'start_test' in request.POST:
+            request.session[f'receiving_introduction_completed_level_{level}'] = True
+            introduction_completed = True
+            return redirect('receiving_level', level=level)
+
         form = ReceivingAnswerForm(request.POST)
         if form.is_valid():
             user_answer = form.cleaned_data['user_answer'].strip()
@@ -129,22 +157,25 @@ def receiving_level(request, level):
                 message = 'Incorrect. Try again.'
                 message_type = 'danger'
         else:
-            message = "Only one 'letter'."
+            message = "Invalid input."
             message_type = 'danger'
 
-        request.session[f'current_symbol_index_level_{level}'] = current_symbol_index
+        request.session[f'current_symbol_index_receiving_level_{level}'] = current_symbol_index
 
+    introduction_symbols = symbols[:2]  # Adjust the number as per your requirement
     current_symbol = symbols[current_symbol_index]
 
     context = {
         'level': level,
         'symbols': symbols,
         'current_symbol': current_symbol,
+        'introduction_symbols': introduction_symbols,
         'form': form,
         'message': message,
         'message_type': message_type,
         'show_next_level': show_next_level,
-        'completed_level': completed_level
+        'completed_level': completed_level,
+        'introduction_completed': introduction_completed
     }
 
     return render(request, 'receiving_level.html', context)

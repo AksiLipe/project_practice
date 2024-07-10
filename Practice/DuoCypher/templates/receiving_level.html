@@ -23,6 +23,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
+            min-height: 80vh; /* Adjust the minimum height as needed */
         }
 
         .center-content > * {
@@ -44,40 +45,56 @@
         </svg>
     </button>
 
-
     <h1>Receiving Level {{ level }}</h1>
 
-    <p class="morse-code">{{ current_symbol.answer }}</p>
-
-    <form method="post" class="w-50">
-        {% csrf_token %}
-        <div class="mb-3">
-            <input type="text" class="form-control form-control-lg text-center" id="user_answer" name="user_answer" placeholder="Enter the Symbol" required>
+    {% if not introduction_completed %}
+        <div class="mb-4">
+            <h3>Introduction Phase</h3>
+            {% for symbol in introduction_symbols %}
+                <p class="morse-code">Symbol: {{ symbol.symbol }}</p>
+                <p class="morse-code">Morse Code: {{ symbol.answer }}</p>
+            {% endfor %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="start_test" value="true" class="btn btn-primary btn-lg mt-3">Start Test</button>
+            </form>
         </div>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <button type="submit" class="btn btn-primary btn-lg me-md-2">Submit Answer</button>
-            <a href="{% url 'reset_receiving_level' level=level %}" class="btn btn-warning btn-lg">Reset Level</a>
-        </div>
-    </form>
+    {% else %}
+        <p class="morse-code">{{ current_symbol.answer }}</p>
+        <form method="post" class="w-50">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" class="form-control form-control-lg text-center" id="user_answer" name="user_answer" placeholder="Enter the Symbol" required>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <button type="submit" class="btn btn-primary btn-lg me-md-2">Submit Answer</button>
+            </div>
+        </form>
 
-    <p>Submitted answer: {{ form.user_answer.value }}</p>
+        <form method="post" class="w-50 mt-3">
+            {% csrf_token %}
+            <button type="submit" name="reset_level" value="true" class="btn btn-warning btn-lg">Reset Level</button>
+        </form>
 
-    {% if message %}
-        <div class="alert alert-{{ message_type }}">
-            {% if message_type == 'success' %}
-                {{ message }}
-            {% elif message == "Only one 'letter'." %}
-                Only one 'letter'.
-            {% elif message_type == 'danger' %}
-                Incorrect. Try again.
-            {% else %}
-                {{ message }}
-            {% endif %}
-        </div>
-    {% endif %}
+        <p>Submitted answer: {{ form.user_answer.value }}</p>
 
-    {% if show_next_level %}
-        <a href="{% url 'receiving_level' level=level|add:1 %}" class="btn btn-success btn-lg mt-3">Next Level</a>
+        {% if message %}
+            <div class="alert alert-{{ message_type }}">
+                {% if message_type == 'success' %}
+                    {{ message }}
+                {% elif message == "Invalid input." %}
+                    Invalid input.
+                {% elif message_type == 'danger' %}
+                    Incorrect. Try again.
+                {% else %}
+                    {{ message }}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if show_next_level %}
+            <a href="{% url 'receiving_level' level=level|add:1 %}" class="btn btn-success btn-lg mt-3">Next Level</a>
+        {% endif %}
     {% endif %}
 </div>
 {% include "footer.html" %}
