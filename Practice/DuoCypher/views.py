@@ -58,6 +58,7 @@ def receiving_level(request, level):
     message = ""
     message_type = ""
     show_next_level = False
+    completed_level = False
 
     current_symbol_index = request.session.get(f'current_symbol_index_level_{level}', 0)
 
@@ -72,6 +73,7 @@ def receiving_level(request, level):
                     message = "Congratulations! You completed the level."
                     message_type = "success"
                     current_symbol_index = 0
+                    completed_level = True
                     if level < levels_count():
                         show_next_level = True
                 else:
@@ -95,7 +97,8 @@ def receiving_level(request, level):
         'form': form,
         'message': message,
         'message_type': message_type,
-        'show_next_level': show_next_level
+        'show_next_level': show_next_level,
+        'completed_level': completed_level
     }
 
     return render(request, 'receiving_level.html', context)
