@@ -1,6 +1,5 @@
-from django.shortcuts import render
+import json
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
 from .forms import AnswerForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -14,10 +13,6 @@ from django.contrib import messages
 
 def base(request):
     return render(request, 'base.html')
-
-
-def rating(request):
-    return render(request, 'rating.html')
 
 
 def profile(request):
@@ -101,9 +96,10 @@ def receiving_level(request, level):
 
 def translator(request):
     if request.method == 'POST':
-        input_text = request.POST.get('input_text', '')
-        source_lang = request.POST.get('source_lang', 'en')
-        target_lang = request.POST.get('target_lang', 'morse')
+        data = json.loads(request.body)
+        input_text = data.get('input_text', '')
+        source_lang = data.get('source_lang', 'en')
+        target_lang = data.get('target_lang', 'morse')
 
         translated_text = ''
 
@@ -112,23 +108,23 @@ def translator(request):
                 if Symbols.objects.filter(symbol=char).exists():
                     translated_text += Symbols.objects.get(symbol=char).answer + ' '
                 else:
-                    translated_text += '?'
+                    translated_text += '? '
         elif source_lang == 'morse' and target_lang == 'en':
             morse_to_text = {s.answer: s.symbol for s in Symbols.objects.all()}
             for code in input_text.split():
                 translated_text += morse_to_text.get(code, '?')
 
-        context = {
+        response_data = {
             'input_text': input_text,
             'translated_text': translated_text.strip(),
             'source_lang': source_lang,
             'target_lang': target_lang,
         }
-        return render(request, 'translator.html', context)
+        return JsonResponse(response_data)
 
     return render(request, 'translator.html')
 
-  
+
 def reset_level(request, level):
     request.session[f'current_symbol_index_level_{level}'] = 0
 
