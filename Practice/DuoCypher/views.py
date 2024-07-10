@@ -1,5 +1,6 @@
 from .forms import ReceivingAnswerForm
 from .forms import SendingAnswerForm
+from .models.Symbols import Symbols
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from utils.helpers import generate_levels
@@ -150,6 +151,11 @@ def receiving_level(request, level):
 
 
 def reset_receiving_level(request, level):
+    request.session[f'current_symbol_index_level_{level}'] = 0
+
+    return redirect('receiving_level', level=level)
+
+
 def translator(request):
     if request.method == 'POST':
         input_text = request.POST.get('input_text', '')
@@ -179,11 +185,6 @@ def translator(request):
 
     return render(request, 'translator.html')
 
-
-def reset_level(request, level):
-    request.session[f'current_symbol_index_level_{level}'] = 0
-
-    return redirect('receiving_level', level=level)
 
 
 def register(request):
