@@ -56,7 +56,7 @@
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
             <button type="submit" class="btn btn-primary btn-lg me-md-2">Submit Answer</button>
-            <a href="{% url 'reset_level' level=level %}" class="btn btn-warning btn-lg">Reset Level</a>
+            <a href="{% url 'reset_receiving_level' level=level %}" class="btn btn-warning btn-lg">Reset Level</a>
         </div>
     </form>
 
@@ -66,8 +66,8 @@
         <div class="alert alert-{{ message_type }}">
             {% if message_type == 'success' %}
                 {{ message }}
-            {% elif message == 'Please enter a valid answer.' %}
-                Please enter a valid answer.
+            {% elif message == "Only one 'letter'." %}
+                Only one 'letter'.
             {% elif message_type == 'danger' %}
                 Incorrect. Try again.
             {% else %}
