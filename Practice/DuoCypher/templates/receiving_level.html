@@ -10,7 +10,7 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         .morse-code {
-            font-size: 4rem;
+            font-size: 2rem;
             font-weight: bold;
         }
 
@@ -23,7 +23,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            min-height: 80vh; /* Adjust the minimum height as needed */
+            min-height: 80vh;
         }
 
         .center-content > * {
@@ -51,8 +51,8 @@
         <div class="mb-4">
             <h3>Introduction Phase</h3>
             {% for symbol in introduction_symbols %}
-                <p class="morse-code">Symbol: {{ symbol.symbol }}</p>
-                <p class="morse-code">Morse Code: {{ symbol.answer }}</p>
+                <h3 class="morse-code">Symbol: {{ symbol.symbol }}</h3>
+                <h3 class="morse-code">Morse Code: {{ symbol.answer }}</h3>
             {% endfor %}
             <form method="post">
                 {% csrf_token %}
