@@ -1,3 +1,6 @@
+import json
+from django.http import JsonResponse
+from .forms import AnswerForm
 from .forms import ReceivingAnswerForm
 from .forms import SendingAnswerForm
 from .models.Symbols import Symbols
@@ -14,10 +17,6 @@ from django.http import JsonResponse
 
 def base(request):
     return render(request, 'base.html')
-
-
-def rating(request):
-    return render(request, 'rating.html')
 
 
 def profile(request):
@@ -218,6 +217,11 @@ def translator(request):
         return JsonResponse(response_data)
 
     return render(request, 'translator.html')
+
+def reset_level(request, level):
+    request.session[f'current_symbol_index_level_{level}'] = 0
+
+    return redirect('receiving_level', level=level)
 
 
 def register(request):
