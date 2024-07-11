@@ -1,6 +1,5 @@
 import json
 from django.http import JsonResponse
-from .forms import AnswerForm
 from .forms import ReceivingAnswerForm
 from .forms import SendingAnswerForm
 from .models.Symbols import Symbols
@@ -217,6 +216,7 @@ def translator(request):
         return JsonResponse(response_data)
 
     return render(request, 'translator.html')
+
 
 def reset_level(request, level):
     request.session[f'current_symbol_index_level_{level}'] = 0
