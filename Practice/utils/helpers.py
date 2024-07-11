@@ -2,7 +2,7 @@ from DuoCypher.models.Symbols import Symbols
 
 
 def generate_levels(level):
-    symbols_all = list(Symbols.objects.all().exclude(answer='  '))
+    symbols_all = list(Symbols.objects.all().exclude(answer='/'))
     symbols_all.sort(key=lambda x: len(x.answer))
 
     n = level
@@ -17,5 +17,5 @@ def generate_levels(level):
 
 
 def levels_count():
-    symbols_count = Symbols.objects.exclude(answer='  ').count()
+    symbols_count = Symbols.objects.exclude(answer='/').count()
     return symbols_count // 2

@@ -26,15 +26,15 @@
             min-height: 80vh;
         }
 
-        .center-content > * {
+        .center-content > {
             margin-bottom: 1rem;
         }
     </style>
 </head>
 
-<body class="bg-body-secondary text-dark">
+<body class="bg-body-secondary text-dark d-flex flex-column vh-100">
 {% include "navbar.html" %}
-<div class="container center-content text-center">
+<div class="container mb-4 center-content text-center">
     <button class="btn btn-outline-secondary d-flex align-items-center" onclick="location.href='/receiving'"
             style="width: 50px; height: 50px;">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left-square" width="24"
@@ -49,14 +49,14 @@
 
     {% if not introduction_completed %}
         <div class="mb-4">
-            <h3>Introduction Phase</h3>
             {% for symbol in introduction_symbols %}
-                <h3 class="morse-code">Symbol: {{ symbol.symbol }}</h3>
-                <h3 class="morse-code">Morse Code: {{ symbol.answer }}</h3>
+                <p class="morse-code">Symbol: {{ symbol.symbol }}</p>
+                <p class="morse-code">Morse Code: {{ symbol.answer }}</p>
             {% endfor %}
             <form method="post">
                 {% csrf_token %}
-                <button type="submit" name="start_test" value="true" class="btn btn-primary btn-lg mt-3">Start Test</button>
+                <button type="submit" name="start_test" value="true" class="btn btn-primary btn-lg mt-3">Start Test
+                </button>
             </form>
         </div>
     {% else %}
@@ -64,7 +64,8 @@
         <form method="post" class="w-50">
             {% csrf_token %}
             <div class="mb-3">
-                <input type="text" class="form-control form-control-lg text-center" id="user_answer" name="user_answer" placeholder="Enter the Symbol" required>
+                <input type="text" class="form-control form-control-lg text-center" id="user_answer" name="user_answer"
+                       placeholder="Enter the Symbol" required>
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                 <button type="submit" class="btn btn-primary btn-lg me-md-2">Submit Answer</button>
