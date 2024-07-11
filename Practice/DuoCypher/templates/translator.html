@@ -14,11 +14,11 @@
             padding: 8px 12px;
             border-radius: 4px;
             margin-right: 8px;
-            font-size: 24px;
+            font-size: 18px;
         }
 
         .translator-input {
-            font-size: 30px;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -46,12 +46,12 @@
                           placeholder="Enter text to translate...">{{ input_text }}</textarea>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <button class="btn btn-primary" type="submit" style="font-size: 24px">Translate</button>
+                <button class="btn btn-primary" type="submit" style="font-size: 18px">Translate</button>
                 <input type="hidden" id="sourceLang" name="source_lang" value="en">
                 <input type="hidden" id="targetLang" name="target_lang" value="morse">
                 <span id="sourceLangLabel" class="language-label" style="background-color: white">English</span>
                 <button id="swapBtn" class="btn btn-secondary" type="button" onclick="swapLanguages()"
-                        style="font-size: 24px">Swap
+                        style="font-size: 18px">Swap
                 </button>
                 <span id="targetLangLabel" class="language-label" style="background-color: white">Morse</span>
             </div>
