@@ -8,8 +8,8 @@
 </head>
 
 <body class="bg-body-secondary text-light d-flex flex-column vh-100">
+{% include "navbar.html" %}
 <div class="container text-light mb-4">
-    {% include "navbar.html" %}
     {% if user.is_authenticated %}
         <div class="container col-md-11 d-flex flex-row gap-3 justify-content-between justify-content-center">
         <button class="btn btn-outline-secondary d-flex align-items-center" onclick="location.href='/'"

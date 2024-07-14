@@ -1,16 +1,15 @@
-import json
-from django.http import JsonResponse
-from .forms import AnswerForm
 from .forms import ReceivingAnswerForm
 from .forms import SendingAnswerForm
 from .models.Symbols import Symbols
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
-from utils.helpers import generate_levels
-from utils.helpers import levels_count
-from django.contrib.auth import authenticate, login, update_session_auth_hash, logout
+from .utils.helpers import generate_levels
+from .utils.helpers import levels_count
+from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from django.contrib import messages
+import json
+from django.http import JsonResponse
 
 
 def base(request):
@@ -216,11 +215,11 @@ def translator(request):
 
     return render(request, 'translator.html')
 
+
 def reset_level(request, level):
     request.session[f'current_symbol_index_level_{level}'] = 0
 
     return redirect('receiving_level', level=level)
-
 
 
 def register(request):
@@ -240,7 +239,8 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect(base)  # Перенаправьте на домашнюю страницу
+            return redirect(base)
+
         else:
             messages.error(request, "Ошибка авторизации. Проверьте введенные данные.")
     else:

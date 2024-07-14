@@ -23,8 +23,8 @@
     </style>
 </head>
 <body class="bg-body-secondary text-dark d-flex flex-column vh-100">
+{% include "navbar.html" %}
 <div class="container mb-4">
-    {% include "navbar.html" %}
     <button class="btn btn-outline-secondary d-flex align-items-center" onclick="location.href='/'"
             style="width: 50px; height: 50px;">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left-square" width="24"
@@ -63,14 +63,37 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 <script>
+    // Пример функции для обновления состояния галочки
+    function updateProgress(levelId, isChecked) {
+        // AJAX-запрос для обновления записи Progress
+        $.ajax({
+            url: '/update-progress/', // Замените на свой URL
+            type: 'POST',
+            data: {
+                'level_id': levelId,
+                'is_complete': isChecked
+            },
+            success: function (data) {
+                // Обновляем процент выполнения и индикатор
+                $('#completion-percentage').text(data.completion_percentage + '%');
+                $('.progress-bar').css('width', data.completion_percentage + '%');
+            },
+            error: function (error) {
+                console.error('Ошибка обновления прогресса:', error);
+            }
+        });
+    }
+
     function toggleButtonColor(checkbox) {
         var button = checkbox.closest('button');
         if (checkbox.checked) {
             button.classList.remove('btn-primary');
             button.classList.add('btn-success');
+            updateProgress(checkbox.id.replace('checkboxNoLabel', ''), true);  // Обновление прогресса
         } else {
             button.classList.remove('btn-success');
             button.classList.add('btn-primary');
+            updateProgress(checkbox.id.replace('checkboxNoLabel', ''), false); // Обновление прогресса
         }
     }
 </script>
